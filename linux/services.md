@@ -37,15 +37,13 @@ with `grep` we can filter everything we get from the journals.
 
 The other way is always looking at the bottom of the log files
 ```
-```
 sudo journalctl -l -f
 ```
 will scroll the bottom of the log files, you can also filter this further with the `grep`command
 
 ```
 sudo tail -f -l /var/log/*
-```
-```
+
 sudo less /var/log/*
 ```
 these 2 options will scroll the bottom of the log files found in the `/var/log/` folder, you can also replace the `*` with specific services to filter further.
