@@ -1,15 +1,21 @@
-ls -Z
+#FilePermissions
 
+With `ls -Z`you can see the security context of each file/directory
+
+|linux value | binary|
+|---|---|
 | `rwx rwx rwx` | 111 111 111 |
 | `rw- rw- rw-` | 110 110 110 |
 | `rwx --- ---` | 111 000 000 |
 
 and so on...
 
-| `rwx` |111 in binary|7|
-| `rw-` |110 in binary|6|
-| `r-x` |101 in binary|5|
-| `r--` |100 in binary|4|
+| linux value | binary | decimal |
+|-------------|-------------|-------------|
+| `rwx` |111 | 7 |
+| `rw-` |110 | 6 |
+| `r-x` |101 | 5 |
+| `r--` |100 | 4 |
 
 Now, if you represent each of the three sets of permissions (owner, group, and other) as a single digit, you have a pretty convenient way of expressing the possible permissions settings. For example, if we wanted to set some_file to have read and write permission for the owner, but wanted to keep the file private from others, we would:
 ```
