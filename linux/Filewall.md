@@ -1,24 +1,27 @@
-Exploring the Defaults
+##Exploring the Defaults
 
 We can see which zone is currently selected as the default by typing:
-´´´
+```
 firewall-cmd --get-default-zone
-´´´
+```
 We can verify our active zones that by typing:
-´´´
+```
 firewall-cmd --get-active-zones
-´´´
+```
 output
-´´´
+```
 public
   interfaces: eth0 eth1
-´´´
-Here, we can see that we have two network interfaces being controlled by the firewall (eth0 and eth1). They are both currently being managed according to the rules defined for the public zone.
+```
 
-How do we know what rules are associated with the public zone though? We can print out the default zone's configuration by typing:
+Here, in this example we see the interfaces controlled by the firewall and in wich zone they are situated.
 
+We can check the configuration by typing:
+```
 firewall-cmd --list-all
+```
 output
+```
 public (default, active)
   interfaces: eth0 eth1
   sources: 
@@ -28,9 +31,10 @@ public (default, active)
   forward-ports: 
   icmp-blocks: 
   rich rules:
-We can tell from the output that this zone is both the default and active and that the eth0 and eth1 interfaces are associated with this zone (we already knew all of this from our previous inquiries). However, we can also see that this zone allows for the normal operations associated with a DHCP client (for IP address assignment) and SSH (for remote administration).
+```
+With this command we can see more information about again the interfaces but also what ports and services.
 
-Setting Rules for your Applications
+##Setting Rules for your Applications
 The basic way of defining firewall exceptions for the services you wish to make available is easy. We'll run through the basic idea here.
 
 Adding a Service to your Zones
