@@ -1,16 +1,18 @@
 Exploring the Defaults
 
 We can see which zone is currently selected as the default by typing:
-
+´´´
 firewall-cmd --get-default-zone
-output
-public
-Since we haven't given firewalld any commands to deviate from the default zone, and none of our interfaces are configured to bind to another zone, that zone will also be the only "active" zone (the zone that is controlling the traffic for our interfaces). We can verify that by typing:
-
+´´´
+We can verify our active zones that by typing:
+´´´
 firewall-cmd --get-active-zones
+´´´
 output
+´´´
 public
   interfaces: eth0 eth1
+´´´
 Here, we can see that we have two network interfaces being controlled by the firewall (eth0 and eth1). They are both currently being managed according to the rules defined for the public zone.
 
 How do we know what rules are associated with the public zone though? We can print out the default zone's configuration by typing:
