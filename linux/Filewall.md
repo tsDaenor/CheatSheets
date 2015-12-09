@@ -44,14 +44,14 @@ firewall-cmd --get-services
 ```
 You can get more details about each of these services by looking at their associated .xml file within the /usr/lib/firewalld/services directory.
 
-You can enable a service for a zone using the ´--add-service= parameter´. The operation will target the default zone or whatever zone Is specified by the ´--zone=´ parameter. By default, this will only adjust the current firewall session. You can adjust the permanent Firewall configuration by including the ´--permanent´ flag.
+You can enable a service for a zone using the `--add-service= parameter`. The operation will target the default zone or whatever zone Is specified by the `--zone=` parameter. By default, this will only adjust the current firewall session. You can adjust the permanent Firewall configuration by including the `--permanent` flag.
 
 Ef we want to add a service to the firewall we can do so with the following command:
 ```
 sudo firewall-cmd --zone=public --add-service=http
 ```
-The ´--zone=´ is not required when adding to the default zone, if adding to a different zone change ´default´ into the desired zone.
-Adding a different service to the firewall is done by swapping ´http´ with the desired service.
+The `--zone=` is not required when adding to the default zone, if adding to a different zone change `default` into the desired zone.
+Adding a different service to the firewall is done by swapping `http` with the desired service.
 To check if it was added you can use the following command, again changing out the ´public´with the desired zone.
 
 ```
@@ -63,11 +63,11 @@ Example output
 http ssh
 ```
 
-The previous commands however will only add the services untill the next reboot of firewall to add a service permanently just add the ´--permanent´ parameter:
+The previous commands however will only add the services untill the next reboot of firewall to add a service permanently just add the `--permanent` parameter:
 ```
 sudo firewall-cmd --zone=public --permanent --add-service=http
 ```
-You can verify that this was successful by adding the --permanent flag to the --list-services operation. You need to use sudo for any --permanent operations:
+You can verify that this was successful by adding the `--permanent` flag to the `--list-services` operation. You need to use sudo for any `--permanent` operations:
 ```
 sudo firewall-cmd --zone=public --permanent --list-services
 ```
