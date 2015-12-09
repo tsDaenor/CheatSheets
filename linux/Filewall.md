@@ -8,7 +8,7 @@ We can verify our active zones that by typing:
 ```
 firewall-cmd --get-active-zones
 ```
-output
+Example output
 ```
 public
   interfaces: eth0 eth1
@@ -20,7 +20,7 @@ We can check the configuration by typing:
 ```
 firewall-cmd --list-all
 ```
-output
+Example output
 ```
 public (default, active)
   interfaces: eth0 eth1
@@ -34,45 +34,44 @@ public (default, active)
 ```
 With this command we can see more information about again the interfaces but also what ports and services.
 
-##Setting Rules for your Applications
-The basic way of defining firewall exceptions for the services you wish to make available is easy. We'll run through the basic idea here.
+##Setting Rules for Applications
 
-Adding a Service to your Zones
+###Adding a Service to Zones
 
-The easiest method is to add the services or ports you need to the zones you are using. Again, you can get a list of the available services with the --get-services option:
-
+The easiest method is to add the services or ports you need to the zones you are using. Again, you can get a list of the available Services with the ´--get-services´ option:
+```
 firewall-cmd --get-services
-output
-RH-Satellite-6 amanda-client bacula bacula-client dhcp dhcpv6 dhcpv6-client dns ftp high-availability http https imaps ipp ipp-client ipsec kerberos kpasswd ldap ldaps libvirt libvirt-tls mdns mountd ms-wbt mysql nfs ntp openvpn pmcd pmproxy pmwebapi pmwebapis pop3s postgresql proxy-dhcp radius rpc-bind samba samba-client smtp ssh telnet tftp tftp-client transmission-client vnc-server wbem-https
-Note
-You can get more details about each of these services by looking at their associated .xml file within the /usr/lib/firewalld/services directory. For instance, the SSH service is defined like this:
+```
+You can get more details about each of these services by looking at their associated .xml file within the /usr/lib/firewalld/services directory.
 
-/usr/lib/firewalld/services/ssh.xml
-<?xml version="1.0" encoding="utf-8"?>
-<service>
-  <short>SSH</short>
-  <description>Secure Shell (SSH) is a protocol for logging into and executing commands on remote machines. It provides secure encrypted communications. If you plan on accessing your machine remotely via SSH over a firewalled interface, enable this option. You need the openssh-server package installed for this option to be useful.</description>
-  <port protocol="tcp" port="22"/>
-</service>
-You can enable a service for a zone using the --add-service= parameter. The operation will target the default zone or whatever zone is specified by the --zone= parameter. By default, this will only adjust the current firewall session. You can adjust the permanent firewall configuration by including the --permanent flag.
+You can enable a service for a zone using the ´--add-service= parameter´. The operation will target the default zone or whatever zone Is specified by the ´--zone=´ parameter. By default, this will only adjust the current firewall session. You can adjust the permanent Firewall configuration by including the ´--permanent´ flag.
 
-For instance, if we are running a web server serving conventional HTTP traffic, we can allow this traffic for interfaces in our "public" zone for this session by typing:
-
+Ef we want to add a service to the firewall we can do so with the following command:
+```
 sudo firewall-cmd --zone=public --add-service=http
-You can leave out the --zone= if you wish to modify the default zone. We can verify the operation was successful by using the --list-all or --list-services operations:
+```
+The ´--zone=´ is not required when adding to the default zone, if adding to a different zone change ´default´ into the desired zone.
+Adding a different service to the firewall is done by swapping ´http´ with the desired service.
+To check if it was added you can use the following command, again changing out the ´public´with the desired zone.
 
+```
 firewall-cmd --zone=public --list-services
-output
-dhcpv6-client http ssh
-Once you have tested that everything is working as it should, you will probably want to modify the permanent firewall rules so that your service will still be available after a reboot. We can make our "public" zone change permanent by typing:
+```
 
+Example output
+```
+http ssh
+```
+
+The previous commands however will only add the services untill the next reboot of firewall to add a service permanently just add the ´--permanent´ parameter:
+```
 sudo firewall-cmd --zone=public --permanent --add-service=http
+```
 You can verify that this was successful by adding the --permanent flag to the --list-services operation. You need to use sudo for any --permanent operations:
-
+```
 sudo firewall-cmd --zone=public --permanent --list-services
-output
-dhcpv6-client http ssh
-Your "public" zone will now allow HTTP web traffic on port 80. If your web server is configured to use SSL/TLS, you'll also want to add the https service. We can add that to the current session and the permanent rule-set by typing:
-
-sudo firewall-cmd --zone=public --add-service=https
-sudo firewall-cmd --zone=public --permanent --add-service=https
+```
+Example output
+```
+http ssh
+```
